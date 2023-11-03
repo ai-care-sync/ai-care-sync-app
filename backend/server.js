@@ -5,6 +5,8 @@ require('./config')
 const http = require('http')
 const express = require('express')
 const morgan = require('morgan')
+const fs = require('fs');
+const spawn = require('child_process').spawn
 
 const middleware = require('./middleware')
 
@@ -43,6 +45,54 @@ app.use('/zoom', zoomRouter)
 
 app.get('/hello', (req, res) => {
   res.send('Hello Zoom Apps!')
+  res.send('medical-term')
+})
+
+//Medical Term Lookup
+
+app.get('/medical-term/:wordID', (req,res) => {
+  let savedData = {}
+  const medTerm = req.params.wordID
+  const path = "./wordRequest.php"
+  const dataPath = "./data.json"
+  const resultPath = "./results.json"
+  const phpProcess = spawn('php', [path, medTerm])
+  phpProcess.on('close', () => {
+    setTimeout(() => {
+      fs.readFile(dataPath, 'utf8', (err, data) => {
+        if(err) {
+          console.error("Error reading data file: ", err)
+          return
+        }
+        try {
+          const jsonData = JSON.parse(data);
+          if(jsonData.length > 0 && typeof jsonData[0] == 'object'){
+            jsonData.forEach(item => {
+              const sdef = item.shortdef;
+              const name = item.meta.id;
+              if(!savedData[name]){
+                savedData[name] = sdef;
+              }
+            })
+          } else{
+            console.log('Unable to find term.')
+            if(jsonData.length > 0){
+              console.log('Did you mean any of the following terms?')
+              console.log(jsonData)
+              savedData = jsonData
+            }
+          }
+          const results = JSON.stringify(savedData, null, 4)
+          fs.writeFileSync(resultPath, results, 'utf8')
+          console.log('Results saved to results.json')
+          res.json(savedData);
+        } catch (e) {
+          console.error('Error parsing data: ', e)
+          return
+        }
+      })
+    }, 400)
+  })
 })
 
 // Handle 404
