@@ -1,0 +1,120 @@
+.splash-screen {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: 100vh;
+    background: linear-gradient(to right, cyan 0%, white 66.6%, white 100%);
+    box-shadow: 0 0 0 2px lightgray inset;
+
+  }
+  
+  .logo-section {
+    flex:1;
+    position: absolute;
+    top: 50px;  /* Adjust the top margin as needed */
+    left: 50px;
+    
+   
+  }
+
+  .main-headline{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-0%);
+    width: calc(300% - 0px);
+    top:250px;
+    font-weight:bold;
+    font-size:18px;
+    
+
+  }
+
+  .main-text{
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-0%);
+    width: calc(300% - 0px);
+    top:290px;
+    font-size:16px;
+  }
+  
+  
+  .right-section {
+    grid-column: 2 / span 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  input[type='text'] {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+  
+  /*button {
+    padding: 10px 20px;
+    background-color: #ccc;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }*/
+  input[type='text']:focus {
+    border-color: blue; /* Change the border color when input is focused */
+    outline: none; 
+  }
+
+    input[type='text'],
+    button {
+    width: calc(100% - 200px); 
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ccc; 
+    }
+
+  .gray-button {
+    padding: 10px 20px;
+    background-color: #ccc; /* Gray background */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 350px;
+  }
+  
+  .blue-button {
+    padding: 10px 20px;
+    background-color: blue; /* Blue background */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 350px;
+  }
+
+  .splash-header {
+    font-size: 20px; 
+    font-weight: bold;
+    margin-bottom: 30px;
+
+  }
+
+  .image-container {
+    position: absolute;
+    top:500%; 
+    left:500%;
+    transform: translateX(-0%);
+    width: calc(175% - 0px);
+    display: flex;
+    align-items: center;
+  
+  }
+  
+  .main-image {
+    max-width: 100%; /* Ensure the image stays within its container */
+  }
+  
